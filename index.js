@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitch auto get chest
 // @namespace    https://github.com/raulpesilva/twitch-auto-get-chest
-// @version      0.1
+// @version      0.2
 // @description  auto get chest on twitch stream
 // @author       RaulPeSilva
 // @match        https://www.twitch.tv/*
