@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Twitch auto get chest
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/raulpesilva/twitch-auto-get-chest
 // @version      0.1
 // @description  auto get chest on twitch stream
 // @author       RaulPeSilva
