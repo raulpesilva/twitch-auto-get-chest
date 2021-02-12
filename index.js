@@ -25,6 +25,7 @@
   function handleControl(currentContext, propertyKey, newValue) {
     currentContext[propertyKey] = newValue;
     setters[propertyKey](currentContext);
+
     return true;
   }
 
@@ -39,14 +40,14 @@
   function onGetChest({ total, getChest }) {
     if (!getChest) {
       $text.textContent = ` Pegar`;
-      $button.style.color = 'var(--color-background-button-success)';
+      $button.style.color = 'var(--color-background-button-primary-default)';
       window.removeEventListener('mousemove', onPageChange);
 
       return;
     }
-
     $text.textContent = ` ${total}`;
-    $button.style.color = 'var(--color-background-button-primary-default)';
+    $button.style.color = 'var(--color-background-button-success)';
+
     searchChest({ getChest });
   }
 
@@ -60,15 +61,16 @@
     wrapperIcon.style.width = '2rem';
     wrapperIcon.style.height = '2rem';
     wrapperIcon.innerHTML = CHEST_ICON;
+
     return wrapperIcon;
   }
   function createText() {
     const text = document.createElement('span');
     const classList = ['tw-strong'];
     classList.forEach((classe) => text.classList.add(classe));
-
     text.style.marginLeft = '1rem';
     text.textContent = ' Pegar';
+
     return text;
   }
 
@@ -77,14 +79,12 @@
     button.appendChild($icon);
     button.appendChild($text);
     const classList = ['tw-button-icon', 'tw-core-button'];
-    // background-color: ;
-    // color: var(--color-text-button-primary);
     classList.forEach((classe) => button.classList.add(classe));
     button.style.padding = '0 1rem';
     button.id = 'getChest';
     button.style.marginRight = '-1rem';
     button.style.width = 'fit-content';
-    $button.style.color = 'var(--color-background-button-success)';
+    button.style.color = 'var(--color-background-button-primary-default)';
     button.addEventListener('click', toggleGetChestValue);
 
     return button;
@@ -96,6 +96,7 @@
     const buttonPlace = place.querySelector(
       '.tw-align-content-center.tw-align-items-center.tw-flex.tw-flex-row'
     );
+
     return buttonPlace;
   }
 
@@ -114,7 +115,9 @@
 
   function onPageChange() {
     const buttonAlreadyExists = document.querySelector('#getChest');
+
     if (buttonAlreadyExists) return;
+
     addButtonInPage();
   }
 
