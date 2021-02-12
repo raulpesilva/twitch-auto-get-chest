@@ -4,7 +4,7 @@
 // @version      0.5
 // @description  auto get chest on twitch stream
 // @author       RaulPeSilva
-// @match        /https:\/\/www.twitch.tv\/\w*/gm
+// @match        https://www.twitch.tv/*
 // @grant        none
 // ==/UserScript==
 
