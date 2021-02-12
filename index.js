@@ -1,23 +1,23 @@
 // ==UserScript==
 // @name         Twitch auto get chest
 // @namespace    https://github.com/raulpesilva/twitch-auto-get-chest
-// @version      0.4
+// @version      0.5
 // @description  auto get chest on twitch stream
 // @author       RaulPeSilva
-// @match        https://www.twitch.tv/*
+// @match        /https:\/\/www.twitch.tv\/\w*/gm
 // @grant        none
 // ==/UserScript==
 
 (function () {
   'use strict';
 
+  const control = new Proxy({ getChest: false, total: 0 }, { set: handleControl });
   const CHEST_ICON = `<svg width="100%" height="100%" version="1.1" viewBox="0 0 20 20" x="0px" y="0px" class="ScIconSVG-sc-1bgeryd-1 cMQeyU"><g><path fill-rule="evenodd" d="M16.503 3.257L18 7v11H2V7l1.497-3.743A2 2 0 015.354 2h9.292a2 2 0 011.857 1.257zM5.354 4h9.292l1.2 3H4.154l1.2-3zM4 9v7h12V9h-3v4H7V9H4zm7 0v2H9V9h2z" clip-rule="evenodd"></path></g></svg>`;
   const INTERVAL = 7000;
   const INITIAL_TIMEOUT = 2000;
   const $text = createText();
   const $icon = createIcon();
   const $button = createButton();
-  const control = new Proxy({ getChest: false, total: 0 }, { set: handleControl });
   let intervalId;
 
   const setters = { total: onTotalChange, getChest: onGetChest };
@@ -38,6 +38,7 @@
   }
 
   function onGetChest({ total, getChest }) {
+    searchChest({ getChest });
     if (!getChest) {
       $text.textContent = ` Pegar`;
       $button.style.color = 'var(--color-background-button-primary-default)';
@@ -47,13 +48,19 @@
     }
     $text.textContent = ` ${total}`;
     $button.style.color = 'var(--color-background-button-success)';
-
-    searchChest({ getChest });
   }
 
   function searchChest({ getChest }) {
-    if (!getChest) clearInterval(intervalId);
+    if (!getChest) {
+      clearInterval(intervalId);
+      return;
+    }
     intervalId = setInterval(clickChest, INTERVAL);
+  }
+
+  function shake() {
+    $icon.classList.add('claimable-bonus__icon');
+    setTimeout(() => $icon.classList.remove('claimable-bonus__icon'), INITIAL_TIMEOUT);
   }
 
   function createIcon() {
@@ -64,6 +71,7 @@
 
     return wrapperIcon;
   }
+
   function createText() {
     const text = document.createElement('span');
     const classList = ['tw-strong'];
@@ -103,6 +111,7 @@
   function clickChest() {
     const element = document.querySelector('.tw-button--success');
     if (element) {
+      shake();
       element.click();
       control.total++;
     }
