@@ -101,7 +101,7 @@
   function getButtonPlacement() {
     const place = document.querySelector('.chat-input__buttons-container');
     if (!place) return;
-    const buttonPlace = place.querySelector('div + div');
+    const buttonPlace = document.querySelector('.chat-input__buttons-container > div + div');
 
     return buttonPlace;
   }
