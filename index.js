@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitch auto get chest
 // @namespace    https://github.com/raulpesilva/twitch-auto-get-chest
-// @version      0.6
+// @version      0.7
 // @description  auto get chest on twitch stream
 // @author       RaulPeSilva
 // @match        https://www.twitch.tv/*
@@ -101,15 +101,13 @@
   function getButtonPlacement() {
     const place = document.querySelector('.chat-input__buttons-container');
     if (!place) return;
-    const buttonPlace = place.querySelector(
-      '.tw-align-content-center.tw-align-items-center.tw-flex.tw-flex-row'
-    );
+    const buttonPlace = place.querySelector('div + div');
 
     return buttonPlace;
   }
 
   function clickChest() {
-    const element = document.querySelector('.tw-button--success');
+    const element = document.querySelector('[aria-label="Resgatar Bônus"]');
     if (element) {
       shake();
       element.click();
